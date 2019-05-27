@@ -17,11 +17,31 @@ export default new Vuex.Store({
   },
   mutations: {
     initPuzzle: (state, puzzle) => {
+      // The puzzle needs to be cloned to avoid referencing the same values
+      const initialPuzzle = [];
+      puzzle.forEach(row => {
+        initialPuzzle.push(row.slice());
+      });
+
       state.puzzle = puzzle;
-      state.initialPuzzle = puzzle;
+      state.initialPuzzle = initialPuzzle;
     },
     setSelectedCell: (state, { row, col }) => {
       state.selectedCell = {row, col, value: state.puzzle[row][col]};
+    },
+    setSelectedCellValue: (state, value) => {
+      const {row, col} = state.selectedCell;
+      // Only change the value if this cell is editable
+      if(!state.initialPuzzle[row][col]){
+        state.selectedCell.value = value || null;
+
+        const newPuzzle = [];
+        state.puzzle.forEach(row => {
+          newPuzzle.push(row.slice());
+        });
+        newPuzzle[row][col] = value || null; // null if sent value is 0 which means delete
+        state.puzzle = newPuzzle;
+      }
     },
   },
   actions: {
@@ -46,6 +66,9 @@ export default new Vuex.Store({
     },
     selectCell: ({commit}, { row, col }) => {
       commit('setSelectedCell', { row, col });
+    },
+    enterCellValue: ({commit}, value) => {
+      commit('setSelectedCellValue', value);
     },
   }
 })

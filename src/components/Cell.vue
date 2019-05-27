@@ -2,7 +2,11 @@
     <div @click="selectCell({row, col})"
         class="cell"
         :style="positionStyle"
-        v-bind:class="{ editable: !initialPuzzle[row][col], selected: (selectedRow === row && selectedCol === col) }">
+        v-bind:class="{
+                selected: (selectedRow === row && selectedCol === col),
+                highlighted: (selectedRow === row || selectedCol === col),
+                editable: !initialPuzzle[row][col],
+            }">
             {{value}}
     </div>
 </template>
@@ -39,23 +43,30 @@ export default {
 .cell{
     width: 46px;
     height: 46px;
-    margin: 2px;
+    /* margin: 2px; */
+    border: solid #35495e;
+    border-width: 2px;
     font-size: 1.5em;
     background-color: #BBBBBB;
-    /* display: inline-block; */
     display: flex;
     align-items: center;
     justify-content: center;
-
     position: absolute;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
 }
 
 .cell:hover{
-    /* background-color: #42b883; */
     transform: scale(1.4);
     border-radius: 5px;
     border: solid #35495e;
     border-width: 3px;
+    width: 44px;
+    height: 44px;
     z-index: 10;
 }
 
@@ -64,11 +75,17 @@ export default {
 }
 
 .selected{
-    background-color: #42b883;
+    background-color: #42b883 !important;
     transform: scale(1.2);
     border-radius: 5px;
     border: solid #35495e;
     border-width: 3px;
+    width: 44px;
+    height: 44px;
     z-index: 9;
+}
+
+.highlighted{
+    background-color: #7cb39a;
 }
 </style>

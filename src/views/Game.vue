@@ -60,12 +60,14 @@ i{
     height: 450px;
     background-color: #35495e;
     margin-left: 50%;
-    transform: translateX(-225px);
+    transform: translateX(-227px);
+    border: solid #35495e;
+    border-width: 2px;
 }
 
 .input-container{
     margin-top: 25px;
     margin-left: 50%;
-    transform: translateX(-225px);
+    transform: translateX(-125px);
 }
 </style>

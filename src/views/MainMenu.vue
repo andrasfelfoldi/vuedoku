@@ -26,11 +26,6 @@ export default {
     },
     computed: {
         ...mapGetters({puzzle: 'getPuzzle'})
-    },
-    created() {
-        if(!this.puzzle){
-            this.loadPuzzle('easy');
-        }
     }
 }
 </script>
