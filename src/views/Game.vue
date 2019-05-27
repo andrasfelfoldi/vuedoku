@@ -6,8 +6,14 @@
         </router-link>
         <div class="content">
             <div class="grid-container">
-                <div v-for="(row, index) in puzzle" :key="index" class="row">
-                    <div v-for="(value, index) in row" :key="index" class="cell">{{value}}</div>
+                <div v-for="(row, i) in puzzle" :key="i" class="row">
+                    <div v-for="(value, j) in row"
+                        :key="j"
+                        @click="selectCell({row: i, col: j})"
+                        class="cell"
+                        v-bind:class="{ editable: !initialPuzzle[i][j], selected: (selectedRow === i && selectedCol === j) }">
+                            {{value}}
+                    </div>
                 </div>
             </div>
             <div class="input-container">
@@ -27,9 +33,21 @@ export default {
         Inputs
     },
     computed: {
-    ...mapGetters({puzzle: 'getPuzzle'})
+        ...mapGetters({
+            puzzle: 'getPuzzle',
+            initialPuzzle: 'getInitialPuzzle',
+            selectedCell: 'getSelectedCell',
+        }),
+        selectedRow(){
+            return this.selectedCell.row;
+        },
+        selectedCol(){
+            return this.selectedCell.col;
+        }
     },
-
+    methods: {
+        ...mapActions(['selectCell']),
+    }
 }
 </script>
 
@@ -74,7 +92,7 @@ i{
     height: 46px;
     margin: 2px;
     font-size: 1.5em;
-    background-color: #FFFFFF;
+    background-color: #BBBBBB;
     display: inline-block;
     display: flex;
     align-items: center;
@@ -82,9 +100,19 @@ i{
 }
 
 .cell:hover{
-    background-color: #42b883;
+    /* background-color: #42b883; */
     transform: scale(1.3);
     border-radius: 5px;
+    border-color: #35495e;
+    border-width: 3px;
+}
+
+.editable{
+    background-color: #FFFFFF;
+}
+
+.selected{
+    background-color: #42b883;
 }
 
 .input-container{
