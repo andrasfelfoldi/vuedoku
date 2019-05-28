@@ -61,7 +61,7 @@ i{
     background-color: #35495e;
     margin-left: 50%;
     transform: translateX(-227px);
-    border: solid #35495e;
+    border: solid #5e6975;
     border-width: 2px;
 }
 

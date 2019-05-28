@@ -27,7 +27,7 @@ export default new Vuex.Store({
       state.initialPuzzle = initialPuzzle;
     },
     setSelectedCell: (state, { row, col }) => {
-      state.selectedCell = {row, col, value: state.puzzle[row][col]};
+      state.selectedCell = state.selectedCell.row === row && state.selectedCell.col === col ? {row: null, col: null, value: null} : {row, col, value: state.puzzle[row][col]};
     },
     setSelectedCellValue: (state, value) => {
       const {row, col} = state.selectedCell;
