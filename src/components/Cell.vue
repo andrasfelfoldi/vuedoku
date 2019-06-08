@@ -7,7 +7,11 @@
                 highlighted: (selectedRow === row || selectedCol === col),
                 editable: !initialPuzzle[row][col],
             }">
-            {{value}}
+            <transition name="pop">
+                <div v-if="value">
+                    {{value}}
+                </div>
+            </transition>
     </div>
 </template>
 
@@ -93,5 +97,13 @@ export default {
 
 .highlighted{
     background-color: #7cb39a;
+}
+
+.pop-enter-active, .pop-leave-active {
+  transition: transform .5s;
+}
+.pop-enter, .pop-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  transform: scale(0);
+  /* opacity: 0; */
 }
 </style>
